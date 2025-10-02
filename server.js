@@ -12,7 +12,13 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (msg) => {
     console.log('Received:', msg);
-    ws.send('You said: ' + msg);
+
+    // Broadcast to all clients except the sender
+    wss.clients.forEach((client) => {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(msg.toString());
+      }
+    });
   });
 
   ws.on('close', () => {
