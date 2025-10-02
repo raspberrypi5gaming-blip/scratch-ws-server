@@ -11,8 +11,8 @@ wss.on('connection', (ws) => {
   ws.send('Hello from WebSocket server!');
 
   ws.on('message', (msg) => {
-    console.log(msg);
-    ws.send(msg);
+    console.log('Received:', msg);
+    ws.send('You said: ' + msg);
   });
 
   ws.on('close', () => {
